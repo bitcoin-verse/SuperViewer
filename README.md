@@ -127,8 +127,7 @@ Benchmark scripts and raw data in [`benchmarks/`](benchmarks/).
 
 ## Memory
 
-SuperViewer uses a larger cache (~512 MB) to enable instant back/forward navigation.  
-
+SuperViewer uses a cache (max ~512 MB) to enable fast back/forward navigation. The cache is used as images are opened, so usage grows gradually and stays low if you view just a few files. This value is just a limit, not memory reserved when starting the app. 
 
 ## Architecture
 
