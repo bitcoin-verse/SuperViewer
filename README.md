@@ -2,15 +2,19 @@
 
 A fast image viewer for Windows, built in Rust.
 
+
 # Quickstart
 
+1. Run the installer (no admin required) 
 ```bash
-# 1. Run the installer (no admin required) 
 installer\install.bat
+```
+2. Set SuperViewer as the default application for your preferred image formats (eg. png) in the window that opens
 
-# 2. Set as default application for your preferred image formats
+3. Open an image by double clicking on it in Windows Explorer 
 
-# 3. To uninstall
+4. To Uninstall, run:
+```bash
 installer\uninstall.bat
 ```
 
@@ -18,6 +22,47 @@ installer\uninstall.bat
 # Screenshot
 
 ![SuperViewer in action](docs/Animation.gif)
+
+## Features
+
+- Fast startup (~30 ms)
+- Smooth 60+ FPS pan & zoom
+- Browse images in folder with (← / →)
+- Fast loading of upcoming images
+- Drag and drop
+- Fullscreen mode
+- Rotate and flip (GPU-based, zero CPU cost)
+- File details in status bar (filename, resolution, zoom)
+- Single self-contained executable
+
+## Supported Formats
+
+| Format | Decoder | Notes |
+|--------|---------|-------|
+| JPEG | turbojpeg (libjpeg-turbo) | Fast path, RGBA output |
+| PNG | image crate | |
+| WebP | webp crate (libwebp) | |
+| BMP | image crate | |
+| TIFF | image crate | |
+| GIF | image crate | Static (first frame) |
+| AVIF | image crate | |
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| Esc | Quit |
+| F / F11 | Toggle fullscreen |
+| 0 / Numpad 0 | Fit to screen |
+| 1 / Numpad 1 | Zoom to 100% (1:1 pixels) |
+| R | Rotate 90 clockwise |
+| H | Flip horizontal |
+| V | Flip vertical |
+| Left | Previous image |
+| Right / Space | Next image |
+| Mouse drag | Pan |
+| Scroll wheel | Zoom to cursor |
+
 
 # What problem we solve
 
@@ -37,8 +82,7 @@ They often:
 
 SuperViewer exists to do one thing well: **to open images immediately and let you move through them quickly.**
 
-
-## Why it’s faster 
+## Why it is faster 
 
 SuperViewer keeps the stack simple and close to the system:
 
@@ -55,7 +99,7 @@ SuperViewer keeps the stack simple and close to the system:
 Result: **less waiting, smoother interactions.**
 
 
-# Benchmarks
+# Benchmarks (The nerdy stuff)
 
 Test machine: Windows 11, i7-11600H, RTX 3050 Ti  
 Disk cache warm, median of 10 runs.
@@ -87,113 +131,11 @@ Disk cache warm, median of 10 runs.
 | JPEGView | 2.8 MB | 10.3 MB | 54 | 11 |
 | qView | 1.5 MB | 96.8 MB | 108 | 71 |
 
-
 ## Memory
 
-SuperViewer uses a larger cache (default 512 MB) to enable instant back/forward navigation.  
-Cache size is configurable.
-
-Benchmark scripts and raw data are available in `benchmarks/`.
-
-
-### Pipeline
-
-```
-CLI arg / drop → decode (rayon pool) → resize → GPU texture upload → render quad
-                       ↕                 ↕              ↑
-                 LRU cache (512 MB)  DisplayReady   wgpu DX12 surface
-                 [full-res RGBA]     [pre-resized]  [texture reuse]
-```
-
-On cache hit with matching viewport, navigation skips decode and resize entirely — just uploads cached pixels to the existing GPU texture.
-
-## Performance
-
-Benchmarked against IrfanView, JPEGView, and qView on an i7-11600H / RTX 3050 Ti laptop (Windows 11).
-
-### Cold Start
-
-Time from process launch to window visible (median of 10 trials, warm disk cache):
-
-| Image | SuperViewer | IrfanView | JPEGView | qView |
-|-------|-------------|-----------|----------|-------|
-| 4K JPEG | **37 ms** | 86 ms | 134 ms | 192 ms |
-| 4K PNG | **39 ms** | 97 ms | 389 ms | 190 ms |
-| 1080p JPEG | **37 ms** | 84 ms | 86 ms | 192 ms |
-| 4K WebP | **48 ms** | 84 ms | 232 ms | 184 ms |
-
-### Navigation Speed
-
-Arrow key through 100 sequential 1080p JPEGs, measured via window title change detection:
-
-| Viewer | Median | Mean | P95 |
-|--------|--------|------|-----|
-| IrfanView | 61 ms | 61 ms | 64 ms |
-| JPEGView | 62 ms | 62 ms | 64 ms |
-| qView | 62 ms | 63 ms | 73 ms |
-| **SuperViewer** | **63 ms** | 72 ms | 95 ms |
-
-### Binary Size
-
-| Viewer | Exe | Total Install | Files | DLLs |
-|--------|-----|---------------|-------|------|
-| **SuperViewer** | 10 MB | **10 MB** | **1** | **0** |
-| IrfanView | 2.4 MB | 8.3 MB | 37 | 12 |
-| JPEGView | 2.8 MB | 10.3 MB | 54 | 11 |
-| qView | 1.5 MB | 96.8 MB | 108 | 71 |
-
-### Memory
-
-| Viewer | Single Image | After Browsing 20 | Peak |
-|--------|-------------|-------------------|------|
-| IrfanView | 46 MB | 19 MB | 46 MB |
-| JPEGView | 91 MB | 92 MB | 161 MB |
-| qView | 160 MB | 208 MB | 272 MB |
-| SuperViewer | 237 MB | 362 MB | 453 MB |
-
-SuperViewer trades higher memory for instant navigation — the 512 MB LRU cache keeps decoded + display-ready images in memory so back-navigation requires zero CPU work.
+SuperViewer uses a larger cache (~512 MB) to enable instant back/forward navigation.  
 
 > Benchmark scripts and raw data in [`benchmarks/`](benchmarks/).
-
-## Features
-
-- Instant startup
-- Smooth 60+ FPS pan & zoom
-- Folder browsing (← / →)
-- Background prefetch of upcoming images
-- Drag and drop
-- Fullscreen mode
-- Rotate and flip (GPU-based, zero CPU cost)
-- Status overlay (filename, resolution, zoom)
-- Single self-contained executable
-
-## Supported Formats
-
-| Format | Decoder | Notes |
-|--------|---------|-------|
-| JPEG | turbojpeg (libjpeg-turbo) | Fast path, RGBA output |
-| PNG | image crate | |
-| WebP | webp crate (libwebp) | |
-| BMP | image crate | |
-| TIFF | image crate | |
-| GIF | image crate | Static (first frame) |
-| AVIF | image crate | |
-
-## Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| Esc | Quit |
-| F / F11 | Toggle fullscreen |
-| 0 / Numpad 0 | Fit to screen |
-| 1 / Numpad 1 | Zoom to 100% (1:1 pixels) |
-| R | Rotate 90 clockwise |
-| H | Flip horizontal |
-| V | Flip vertical |
-| Left | Previous image |
-| Right / Space | Next image |
-| Mouse drag | Pan |
-| Scroll wheel | Zoom to cursor |
 
 ## Architecture
 
@@ -210,7 +152,7 @@ assets/
     overlay.wgsl    Status bar overlay shader (rect-positioned textured quad)
 ```
 
-## Building
+## Building 
 
 ### Prerequisites
 
@@ -230,7 +172,7 @@ cargo build --release
 
 The release binary is at `target/release/superviewer.exe`.
 
-### Install as Default Image Viewer
+### Installing as our default Image Viewer
 
 ```bash
 # Run the installer (no admin required)
@@ -245,7 +187,7 @@ To pass a custom exe path (e.g. during development):
 .\installer\install.ps1 -ExePath "target\release\superviewer.exe"
 ```
 
-### Uninstall
+### To ininstall
 
 ```bash
 installer\uninstall.bat
@@ -275,7 +217,7 @@ python tests/generate_test_images.py
 target/release/superviewer.exe tests/images/test_gradient.bmp
 ```
 
-## Dependencies
+## Build Dependencies
 
 | Crate | Version | Purpose |
 |-------|---------|---------|
@@ -289,3 +231,6 @@ target/release/superviewer.exe tests/images/test_gradient.bmp
 | crossbeam-channel | 0.5 | Bounded channels for pipeline |
 | clap | 4 | CLI parsing |
 | bytemuck | 1 | Safe transmute for GPU uniforms |
+
+
+Made with <3 at Bitcoin.com
