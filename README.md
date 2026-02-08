@@ -37,15 +37,7 @@ installer\uninstall.bat
 
 ## Supported Formats
 
-| Format | Decoder | Notes |
-|--------|---------|-------|
-| JPEG | turbojpeg (libjpeg-turbo) | Fast path, RGBA output |
-| PNG | image crate | |
-| WebP | webp crate (libwebp) | |
-| BMP | image crate | |
-| TIFF | image crate | |
-| GIF | image crate | Static (first frame) |
-| AVIF | image crate | |
+JPEG, PNG, Web, BMP, TIFF, GIF, AVIF
 
 ## Keyboard Shortcuts
 
@@ -104,6 +96,8 @@ Result: **less waiting, smoother interactions.**
 Test machine: Windows 11, i7-11600H, RTX 3050 Ti  
 Disk cache warm, median of 10 runs.
 
+Benchmark scripts and raw data in [`benchmarks/`](benchmarks/).
+
 ## Cold start (process launch → window visible)
 
 | Image | SuperViewer | IrfanView | JPEGView | qView |
@@ -135,7 +129,6 @@ Disk cache warm, median of 10 runs.
 
 SuperViewer uses a larger cache (~512 MB) to enable instant back/forward navigation.  
 
-> Benchmark scripts and raw data in [`benchmarks/`](benchmarks/).
 
 ## Architecture
 
@@ -172,7 +165,7 @@ cargo build --release
 
 The release binary is at `target/release/superviewer.exe`.
 
-### Installing as our default Image Viewer
+### Installing
 
 ```bash
 # Run the installer (no admin required)
