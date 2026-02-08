@@ -17,7 +17,7 @@ installer\uninstall.bat
 
 # Screenshot
 
-![SuperViewer showing a 4K photo at 100% zoom](docs/screenshot.png)
+![SuperViewer in action](docs/Animation.gif)
 
 # What problem we solve
 
