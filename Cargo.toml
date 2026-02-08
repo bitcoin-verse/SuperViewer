@@ -1,0 +1,40 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/viewer-core",
+    "crates/viewer-render",
+    "crates/viewer-win32",
+    "crates/viewer-cli",
+    "crates/viewer-app",
+]
+
+[workspace.dependencies]
+wgpu = "28"
+windows = "0.61"
+raw-window-handle = "0.6"
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "gif", "bmp", "tiff"] }
+turbojpeg = { version = "1.4", default-features = false, features = ["cmake"] }
+webp = "0.3"
+rayon = "1.10"
+crossbeam-channel = "0.5"
+clap = { version = "4", features = ["derive"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+fast_image_resize = "5.1"
+anyhow = "1"
+thiserror = "2"
+parking_lot = "0.12"
+bytemuck = { version = "1", features = ["derive"] }
+pollster = "0.4"
+
+# Internal crates
+viewer-core = { path = "crates/viewer-core" }
+viewer-render = { path = "crates/viewer-render" }
+viewer-win32 = { path = "crates/viewer-win32" }
+viewer-cli = { path = "crates/viewer-cli" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

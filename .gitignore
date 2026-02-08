@@ -1,0 +1,51 @@
+# Rust / Cargo
+/target
+**/*.rs.bk
+
+# Build artifacts
+*.pdb
+*.exe
+*.dll
+*.lib
+*.obj
+*.exp
+*.ilk
+*.d
+
+# Claude Code
+.claude/
+.claude.*
+CLAUDE.md
+.claude_spec/
+NUL
+
+# IDEs
+.vs/
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Editors
+*.swp
+*.swo
+*~
+\#*\#
+.#*
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+._*
+
+# Test output
+tests/images/
+
+# Logs / debug
+*.log
+*.trace
+
+# Env
+.env
+.env.*

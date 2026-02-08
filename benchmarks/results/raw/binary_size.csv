@@ -1,0 +1,5 @@
+﻿"Viewer","ExeSizeMB","InstallSizeMB","FileCount","DllCount","Notes","Metric","Timestamp"
+"SuperViewer","10.02","10.02","1","0","Single exe, no runtime deps","BinarySize","2026-02-08 15:14:53"
+"IrfanView","2.42","8.34","37","12","Portable install, libjpeg-turbo","BinarySize","2026-02-08 15:14:53"
+"JPEGView","2.81","10.33","54","11","Portable, C++ native","BinarySize","2026-02-08 15:14:53"
+"qView","1.5","96.77","108","71","Qt-based minimal viewer","BinarySize","2026-02-08 15:14:53"

@@ -1,0 +1,48 @@
+{
+  "viewers": [
+    {
+      "name": "SuperViewer",
+      "exe": "E:\\dev\\bcom\\vViewer\\target\\release\\superviewer.exe",
+      "processName": "superviewer",
+      "installDir": "",
+      "notes": "Single exe, no runtime deps"
+    },
+    {
+      "name": "IrfanView",
+      "exe": "C:\\Program Files\\IrfanView\\i_view64.exe",
+      "processName": "i_view64",
+      "installDir": "C:\\Program Files\\IrfanView",
+      "notes": "Portable install, libjpeg-turbo"
+    },
+    {
+      "name": "JPEGView",
+      "exe": "C:\\Program Files\\JPEGView\\JPEGView.exe",
+      "processName": "JPEGView",
+      "installDir": "C:\\Program Files\\JPEGView",
+      "notes": "Portable, C++ native"
+    },
+    {
+      "name": "qView",
+      "exe": "C:\\Users\\ASUS\\AppData\\Local\\Programs\\qView\\qView.exe",
+      "processName": "qView",
+      "installDir": "C:\\Users\\ASUS\\AppData\\Local\\Programs\\qView",
+      "notes": "Qt-based minimal viewer"
+    }
+  ],
+  "corpus": {
+    "dir": "benchmarks\\corpus",
+    "small_jpeg": "small_jpeg.jpg",
+    "large_jpeg": "large_jpeg.jpg",
+    "large_png": "large_png.png",
+    "webp_photo": "webp_photo.webp",
+    "nav_folder": "nav_folder"
+  },
+  "settings": {
+    "trials": 10,
+    "stabilizeMs": 3000,
+    "interTrialMs": 2000,
+    "pollIntervalMs": 5,
+    "navImages": 100,
+    "navWaitMs": 20
+  }
+}

@@ -1,0 +1,22 @@
+[package]
+name = "viewer-app"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "superviewer"
+path = "src/main.rs"
+
+[dependencies]
+viewer-core = { workspace = true }
+viewer-render = { workspace = true }
+viewer-win32 = { workspace = true }
+viewer-cli = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+windows = { workspace = true, features = ["Win32_UI_WindowsAndMessaging"] }
+wgpu = { workspace = true }
+
+[build-dependencies]
+winres = "0.1"
