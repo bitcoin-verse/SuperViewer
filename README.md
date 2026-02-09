@@ -23,6 +23,12 @@ installer\uninstall.bat
 
 ![SuperViewer in action](docs/Animation.gif)
 
+## Windows vs SuperViewer
+
+| Windows Photos | SuperViewer |
+|:-:|:-:|
+| ![Windows Photos](docs/win_demo.gif) | ![SuperViewer](docs/superviewer_demo.gif) |
+
 ## Features
 
 - Fast startup (~30 ms)
