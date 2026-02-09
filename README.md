@@ -23,7 +23,7 @@ installer\uninstall.bat
 
 ![SuperViewer in action](docs/Animation.gif)
 
-## Windows vs SuperViewer
+## Windows Photos vs SuperViewer
 
 | Windows Photos | SuperViewer |
 |:-:|:-:|
